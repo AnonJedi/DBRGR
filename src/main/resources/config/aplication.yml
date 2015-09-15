@@ -2,6 +2,7 @@ server:
   port: 9000
 spring:
   datasource:
+    driver-class-name: org.postgresql.Driver
     url: jdbc:postgres://localhost:5432/rgr
     username: postgres
     password:
