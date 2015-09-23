@@ -1,3 +1,150 @@
+/*css for welcome*/
+
 body {
 	background-color: gray;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.logReg {
+	width: 400px;
+	margin: auto;
+	margin-top: 10%;
+}
+
+.autorizeForm {
+	border: 2px solid;
+	border-radius: 2px;
+	background-color: black;
+	text-align: center;
+}
+
+.welcomeMsg {
+	width: 105px;
+	font-size: 20px;
+	color: white;
+	margin: auto;
+}
+
+.login, .password, .button {
+	width: 80%;
+	height: 30px;
+	margin-top: 5px;
+    margin-bottom: 5px;
+	padding: 0 10px 0 10px;
+	border-radius: 2px;
+    box-sizing: border-box;
+    border: 0;
+    font-size: 14px;
+}
+
+.login:active, .password:active, .button:active {
+	outline: none;
+}
+
+.button {
+	background-color: #009A21;
+}
+
+.button:hover {
+	width: 81%;
+	font-size: 15px;
+}
+
+.reg {
+	margin-top: 40px;
+}
+
+.error {
+	background-color: red;
+}
+
+/*css for main*/
+
+.content {
+	background-color: black;
+    width: 700px;
+    margin: auto;
+    margin-top: 7%;
+    padding-bottom: 20px;
+}
+
+.header {
+	width: 665px;
+    height: 50px;
+    margin: auto;
+}
+
+.dropDown {
+	float: right;
+    margin-top: 10px;
+    height: 30px;
+}
+
+.activeTab {
+	background-color: white;
+	color: black;
+}
+
+.tab {
+	float: left;
+    width: 164px;
+    height: 35px;
+    margin-top: 4px;
+    padding-top: 10px;
+    text-align: center;
+    border: 1px solid white;
+}
+
+.deactiveTab {
+	background-color: black;
+	color: white;
+}
+
+.activeSpace {
+	background-color: white;
+	width: 665px;
+    margin: auto;
+}
+
+.activeSection {
+	display: block;
+}
+
+.diactiveSection {
+	display: none;
+}
+
+.section {
+
+}
+
+.insertResult {
+	width: 100%;
+	margin-top: 10px;
+	padding: 5px 10px 5px 10px;
+}
+
+.inputTextbox {
+	width: 37%;
+    height: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 0 10px 0 10px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border: 1px solid black;
+    margin: 5px 15px 5px 15px;
+}
+
+.actionBtn {
+	height: 30px;
+    width: 80px;
+}
+
+.center {
+	text-align: center;
+	padding-bottom: 15px;
 }

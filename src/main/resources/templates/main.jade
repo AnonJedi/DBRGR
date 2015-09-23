@@ -4,6 +4,38 @@ html
     meta(charset='utf-8')
     meta(name='viewport', content='width=device-width, initial-scale=1')
     link(rel='stylesheet', type='text/css', href='css/css.css')
+    script(src='/js/jquery-1.11.3.js')
+    script(src='/js/js.js')
     title DB interface
   body
-    h1 Hi, it's work!!!
+    .content
+      .header
+        select.dropDown
+          option(value='department') department
+          option(value='chair') chair
+          option(value='class') class 
+          option(value='student') student
+          option(value='course') course
+          option(value='lecturer') lecturer
+          option(value='student_course') student_course 
+        #js-insertTab.tab.activeTab(name='Insert') Insert data
+        #js-updateTab.tab.deactiveTab(name='Update') Update data
+        #js-deleteTab.tab.deactiveTab(name='Delete') Delete data
+      .activeSpace
+        select(size=15, multiple='multiple').insertResult
+          option name
+          for d in departments
+            option= d.name
+        .control
+          input(type='textbox', name='name', placeholder='name').inputTextbox
+          input(type='hidden', name='firstname', placeholder='firstname').inputTextbox
+          input(type='hidden', name='lastname', placeholder='lastname').inputTextbox
+          input(type='hidden', name='isHead', placeholder='isHead').inputTextbox
+          input(type='hidden', name='departmentId', placeholder='departmentId').inputTextbox
+          input(type='hidden', name='chairId', placeholder='chairId').inputTextbox
+          input(type='hidden', name='lecturerId', placeholder='lecturerId').inputTextbox
+          input(type='hidden', name='classId', placeholder='classId').inputTextbox
+          input(type='hidden', name='studentId', placeholder='studentId').inputTextbox
+          input(type='hidden', name='courseId', placeholder='courseId').inputTextbox
+        .center
+          button().actionBtn Insert

@@ -1,0 +1,29 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='css/css.css')
+    title DB interface
+  body
+    .logReg
+      form.autorizeForm(role='form', action='/signin', method='POST', name='signinForm')
+        .welcomeMsg авторизация
+        if signinError
+          input.login(type='textbox', name='username', placeholder='username', maxlength='30', value=form.username)
+          input.password(type='password', name='password', placeholder='password', maxlength='30')
+          button.button.error(type='submit') Войти
+        else
+          input.login(type='textbox', name='username', placeholder='username', maxlength='30')
+          input.password(type='password', name='password', placeholder='password', maxlength='30')
+          button.button(type='submit') Войти
+      form.autorizeForm.reg(role='form', action='/signup', method='POST', name='signinForm')
+        .welcomeMsg регистрация
+        if signupError
+          input.login(type='textbox', name='username', placeholder='username', maxlength='30', value=form.username)
+          input.password(type='password', name='password', placeholder='password', maxlength='30')
+          button.button.error(tupe='submit') Регистрация
+        else
+          input.login(type='textbox', name='username', placeholder='username', maxlength='30')
+          input.password(type='password', name='password', placeholder='password', maxlength='30')
+          button.button(tupe='submit') Регистрация
