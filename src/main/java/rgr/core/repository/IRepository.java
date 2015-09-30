@@ -1,6 +1,7 @@
 package rgr.core.repository;
 
 import org.apache.ibatis.annotations.Insert;
+import rgr.core.domain.DeleteForm;
 import rgr.core.domain.InsertForm;
 import rgr.core.domain.UpdateForm;
 import rgr.core.domain.UserImpl;
@@ -41,13 +42,13 @@ public interface IRepository {
     public void insertCourse(InsertForm form);
     public void insertStdCrs(InsertForm form);
 
-    public void deleteDepartment(InsertForm form);
-    public void deleteChair(InsertForm form);
-    public void deleteLecturer(InsertForm form);
-    public void deleteClass(InsertForm form);
-    public void deleteStudent(InsertForm form);
-    public void deleteCourse(InsertForm form);
-    public void deleteStdCrs(InsertForm form);
+    public void deleteDepartment(DeleteForm form);
+    public void deleteChair(DeleteForm form);
+    public void deleteLecturer(DeleteForm form);
+    public void deleteClass(DeleteForm form);
+    public void deleteStudent(DeleteForm form);
+    public void deleteCourse(DeleteForm form);
+    public void deleteStdCrs(DeleteForm form);
 
     public void updateDepartment(UpdateForm form);
     public void updateChair(UpdateForm form);

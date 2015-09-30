@@ -1,6 +1,7 @@
 package rgr.core.repository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import rgr.core.domain.DeleteForm;
 import rgr.core.domain.InsertForm;
 import rgr.core.domain.UpdateForm;
 import rgr.core.domain.UserImpl;
@@ -134,37 +135,37 @@ public class Repository implements IRepository {
 
 
     @Override
-    public void deleteDepartment(InsertForm form) {
+    public void deleteDepartment(DeleteForm form) {
         mapper.deleteDepartment(form);
     }
 
     @Override
-    public void deleteChair(InsertForm form) {
+    public void deleteChair(DeleteForm form) {
         mapper.deleteChair(form);
     }
 
     @Override
-    public void deleteLecturer(InsertForm form) {
+    public void deleteLecturer(DeleteForm form) {
         mapper.deleteLecturer(form);
     }
 
     @Override
-    public void deleteClass(InsertForm form) {
+    public void deleteClass(DeleteForm form) {
         mapper.deleteClass(form);
     }
 
     @Override
-    public void deleteStudent(InsertForm form) {
+    public void deleteStudent(DeleteForm form) {
         mapper.deleteStudent(form);
     }
 
     @Override
-    public void deleteCourse(InsertForm form) {
+    public void deleteCourse(DeleteForm form) {
         mapper.deleteCourse(form);
     }
 
     @Override
-    public void deleteStdCrs(InsertForm form) {
+    public void deleteStdCrs(DeleteForm form) {
         mapper.deleteStdCrs(form);
     }
 

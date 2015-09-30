@@ -1,10 +1,9 @@
 package rgr.core.domain;
 
 /**
- * Created by vik on 20.09.15.
+ * Created by vik on 30.09.15.
  */
-public class InsertForm {
-
+public class DeleteForm {
     private Long id;
     private String table;
     private String name;
@@ -36,7 +35,7 @@ public class InsertForm {
     }
 
     public void setName(String name) {
-        this.name = name.toLowerCase();
+        this.name = name;
     }
 
     public String getFirstname() {
@@ -44,7 +43,7 @@ public class InsertForm {
     }
 
     public void setFirstname(String firstname) {
-        this.firstname = firstname.toLowerCase();
+        this.firstname = firstname;
     }
 
     public String getLastname() {
@@ -52,7 +51,7 @@ public class InsertForm {
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname.toLowerCase();
+        this.lastname = lastname;
     }
 
     public boolean isHead() {
@@ -68,7 +67,7 @@ public class InsertForm {
     }
 
     public void setDepartment(String department) {
-        this.department = department.toLowerCase();
+        this.department = department;
     }
 
     public String getChair() {
@@ -76,7 +75,7 @@ public class InsertForm {
     }
 
     public void setChair(String chair) {
-        this.chair = chair.toLowerCase();
+        this.chair = chair;
     }
 
     public String getClas() {
@@ -84,6 +83,6 @@ public class InsertForm {
     }
 
     public void setClas(String clas) {
-        this.clas = clas.toLowerCase();
+        this.clas = clas;
     }
 }

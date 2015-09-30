@@ -1,6 +1,7 @@
 package rgr.core.mappers;
 
 import org.apache.ibatis.annotations.*;
+import rgr.core.domain.DeleteForm;
 import rgr.core.domain.InsertForm;
 import rgr.core.domain.UpdateForm;
 import rgr.core.domain.UserImpl;
@@ -162,7 +163,7 @@ public interface Mapper {
             "VALUES\n" +
             "   (#{name}, (SELECT id\n" +
             "   FROM lecturer\n" +
-            "   WHERE lastname=#{lecturer}))")
+            "   WHERE lastname=#{lastname}))")
     public void insertCourse(InsertForm form);
 
     @Insert("INSERT INTO student_course\n" +
@@ -179,27 +180,35 @@ public interface Mapper {
 
     @Delete("DELETE FROM department\n" +
             "WHERE name=#{name}")
-    public void deleteDepartment(InsertForm form);
+    public void deleteDepartment(DeleteForm form);
 
     @Delete("DELETE FROM chair\n" +
-            "WHERE name=#{name} AND department_id=#{departmentId}")
-    public void deleteChair(InsertForm form);
+            "WHERE name=#{name} AND department_id=(SELECT id\n" +
+            "   FROM department\n" +
+            "   WHERE name=#{department})")
+    public void deleteChair(DeleteForm form);
 
     @Delete("DELETE FROM lecturer\n" +
             "WHERE firstname=#{firstname} AND lastname=#{lastname}")
-    public void deleteLecturer(InsertForm form);
+    public void deleteLecturer(DeleteForm form);
 
     @Delete("DELETE FROM class\n" +
-            "WHERE name=#{name} AND department_id=#{departmentId}")
-    public void deleteClass(InsertForm form);
+            "WHERE name=#{name} AND department_id=(SELECT id\n" +
+            "   FROM department\n" +
+            "   WHERE name=#{department})")
+    public void deleteClass(DeleteForm form);
 
     @Delete("DELETE FROM student\n" +
-            "WHERE firstname=#{firstname} AND lastname=#{lastname} AND class_id=#{classId}")
-    public void deleteStudent(InsertForm form);
+            "WHERE firstname=#{firstname} AND lastname=#{lastname} AND class_id=(SELECT id\n" +
+            "   FROM class\n" +
+            "   WHERE name=#{clas})")
+    public void deleteStudent(DeleteForm form);
 
     @Delete("DELETE FROM course\n" +
-            "WHERE name=#{name} AND lecturer_id=#{lecturerId}")
-    public void deleteCourse(InsertForm form);
+            "WHERE name=#{name} AND lecturer_id=(SELECT id\n" +
+            "   FROM lecturer\n" +
+            "   WHERE lastname=#{lastname})")
+    public void deleteCourse(DeleteForm form);
 
     @Delete("DELETE FROM student_course\n" +
             "WHERE student_id=(SELECT id\n" +
@@ -208,7 +217,7 @@ public interface Mapper {
             "AND course_id=(SELECT id\n" +
             "   FROM course\n" +
             "   WHERE name=#{name})")
-    public void deleteStdCrs(InsertForm form);
+    public void deleteStdCrs(DeleteForm form);
 
 
     @Update("UPDATE department\n" +
@@ -217,28 +226,52 @@ public interface Mapper {
     public void updateDepartment(UpdateForm form);
 
     @Update("UPDATE chair\n" +
-            "SET name=#{name}, department_id=#{departmentId}\n" +
-            "WHERE name=#{oldName} AND department_id=#{oldDepartmentId}")
+            "SET name=#{name}, department_id=(SELECT id\n" +
+            "   FROM department\n" +
+            "   WHERE name=#{department})\n" +
+            "WHERE name=#{oldName} AND department_id=(SELECT id\n" +
+            "   FROM department\n" +
+            "   WHERE name=#{oldDepartment})")
     public void updateChair(UpdateForm form);
 
     @Update("UPDATE lecturer\n" +
-            "SET firstname=#{firstname}, lastname=#{lastname}, chair_id=#{chairId}\n" +
-            "WHERE firstname=#{oldFirstname} AND lastname=#{oldLastname} AND chair_id=#{oldChairId}")
+            "SET firstname=#{firstname}, lastname=#{lastname}, chair_id=(SELECT id\n" +
+            "   FROM chair\n" +
+            "   WHERE name=#{chair})\n" +
+            "WHERE firstname=#{oldFirstname} AND lastname=#{oldLastname} AND chair_id=(SELECT id\n" +
+            "   FROM chair\n" +
+            "   WHERE name=#{oldChair})")
     public void updateLecturer(UpdateForm form);
 
     @Update("UPDATE class\n" +
-            "SET name=#{name}, department_id=#{departmentId}\n" +
-            "WHERE name=#{oldName} AND department_id=#{oldDepartmentId}")
+            "SET name=#{name}, department_id=(SELECT id\n" +
+            "   FROM department\n" +
+            "   WHERE name=#{department})\n" +
+            "WHERE name=#{oldName} AND department_id=(SELECT id\n" +
+            "   FROM department\n" +
+            "   WHERE name=#{oldDepartment})")
     public void updateClass(UpdateForm form);
 
     @Update("UPDATE student\n" +
-            "SET firstname=#{firstname}, lastname=#{lastname}, class_id=#{classId}, chair_id=#{chairId}, is_head=#{isHead}\n" +
-            "WHERE firstname=#{oldFirstname} AND lastname=#{oldLastname} AND class_id=#{oldClassId} AND chair_id=#{oldChairId} AND is_head=#{oldIsHead}")
+            "SET firstname=#{firstname}, lastname=#{lastname}, class_id=(SELECT id\n" +
+            "   FROM class\n" +
+            "   WHERE name=#{clas}), chair_id=(SELECT id\n" +
+            "   FROM chair\n" +
+            "   WHERE name=#{chair}), is_head=#{isHead}\n" +
+            "WHERE firstname=#{oldFirstname} AND lastname=#{oldLastname} AND class_id=(SELECT id\n" +
+            "   FROM class\n" +
+            "   WHERE name=#{oldClas}) AND chair_id=(SELECT id\n" +
+            "   FROM chair\n" +
+            "   WHERE name=#{oldChair}) AND is_head=#{oldIsHead}")
     public void updateStudent(UpdateForm form);
 
     @Update("UPDATE course\n" +
-            "SET name=#{name}, lecturer_id=#{lecturerId}\n" +
-            "WHERE name=#{oldName} AND lecturer_id=#{oldLecturerId}")
+            "SET name=#{name}, lecturer_id=(SELECT id\n" +
+            "   FROM lecturer\n" +
+            "   WHERE lastname=#{lastname})\n" +
+            "WHERE name=#{oldName} AND lecturer_id=(SELECT id\n" +
+            "   FROM lecturer\n" +
+            "   WHERE lastname=#{oldLastname})")
     public void updateCourse(UpdateForm form);
 
     @Update("UPDATE student_course\n" +

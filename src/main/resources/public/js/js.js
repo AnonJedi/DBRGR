@@ -117,7 +117,6 @@
 			var table = $('.dropDown').val();
 			var sendData;
 			var selected;
-			var temp;
 			var option;
 
 			if ($(this).text() === 'Insert') {
@@ -140,34 +139,31 @@
 					dataType: 'json',
 					data: sendData,
 					url: '/insert',
-					statusCode: {
-						200: function() {
+					success: function(data) {
+						if (data) {
 							option = '<option>';
-							$('input[type="textbox"]').each(function() {
-								option += $(this).val() + '  ';
-								$(this).val('');
-							});
-							$('.insertDropdown').each(function() {
-								option += $(this).hasClass('displayInline') ? $(this).val() + '  ' : '';
-							});
+						    $('input[type="textbox"]').each(function() {
+							    option += $(this).val() + '  ';
+							    $(this).val('');
+						    });
+						    $('.insertDropdown').each(function() {
+							    option += $(this).hasClass('displayInline') ? $(this).val() + '  ' : '';
+						    });
 
-							$('.insertResult').append(option);
-							$('.actionBtn').removeClass('error');
-						},
-						400: function() {
+						    $('.insertResult').append(option);
+						    $('.actionBtn').removeClass('error');
+						} else {
 							$('.actionBtn').addClass('error');
 						}
-					} 
+						
+					},
+					error: function() {
+						$('.actionBtn').addClass('error');
+					}
+					
 				});
 			} else if ($(this).text() === 'Delete') {
-				temp = String($('.insertResult').val()).split(" ");
-				selected = [];
-
-				$(temp).each(function() {
-					if (String(this) !== "") {
-						selected.push(String(this));
-					}
-				});
+				selected = String($('.insertResult').val()).split('  ');
 
 				if (selected[0] !== 'name' && selected[0] !== 'firstname') {
 
@@ -181,7 +177,7 @@
 						sendData = {
 							table: table,
 							name: selected[0],
-							departmentId: selected[1]
+							department: selected[1]
 						};
 					}
 					if (table === 'lecturer') {
@@ -189,14 +185,14 @@
 							table: table,
 							firstname: selected[0],
 							lastname: selected[1],
-							chairId: selected[2]
+							chair: selected[2]
 						};
 					}
 					if (table === 'class') {
 						sendData = {
 							table: table,
 							name: selected[0],
-							departmentId: selected[1]
+							department: selected[1]
 						};
 					}
 					if (table === 'student') {
@@ -204,15 +200,15 @@
 							table: table,
 							firstname: selected[0],
 							lastname: selected[1],
-							classId: selected[3],
-							chairId: selected[4]
+							clas: selected[3],
+							chair: selected[4]
 						};
 					}
 					if (table === 'course') {
 						sendData = {
 							table: table,
 							name: selected[0],
-							lecturerId: selected[1]
+							firstname: selected[1]
 						};
 					}
 					if (table === 'student_course') {
@@ -228,19 +224,17 @@
 						dataType: 'json',
 						url: '/delete',
 						type: 'POST',
-						statusCode: {
-							200: function() {
-								$('.insertResult option').each(function() {
-									if (String($(this).val()) ===
-										String($('.insertResult').val())) {
-										$(this).remove();
-									}
-								});
-								$('.actionBtn').removeClass('error');
-							},
-							400: function() {
-								$('.actionBtn').addClass('error');
-							}
+						success: function() {
+							$('.insertResult option').each(function() {
+								if (String($(this).val()) ===
+									String($('.insertResult').val())) {
+									$(this).remove();
+								}
+							});
+							$('.actionBtn').removeClass('error');
+						},
+						error: function() {
+							$('.actionBtn').addClass('error');
 						}
 					});
 
@@ -249,85 +243,73 @@
 				}
 			} else if ($(this).text() === 'Update') {
 
-				temp = String($('.insertResult').val()).split(" ");
-				selected = [];
-
-				$(temp).each(function() {
-					if (String(this) !== "") {
-						selected.push(String(this));
-					}
-				});
+				selected = String($('.insertResult').val()).split('  ');
+				sendData = {
+					table: table,
+					name: '',
+					firstname: '',
+					lastname: '',
+					isHead: '',
+					department: '',
+					chair: '',
+					clas: '',
+					oldName: '',
+					oldFirstname: '',
+					oldIsHead: '',
+					oldDepartment: '',
+					oldChair: '',
+					oldClas: ''
+				};
 
 				if (selected[0] !== 'name' && selected[0] !== 'firstname') {
 
 					if (table === 'department') {
-						sendData = {
-							table: table,
-							name: $('input[name="name"]').val() === '' ? selected[0] : $('input[name="name"]').val(),
-							oldName: selected[0]
-						};
+						sendData.name = $('input[name="name"]').val() === '' ? selected[0] : $('input[name="name"]').val();
+						sendData.oldName = selected[0];
 					}
 					if (table === 'chair') {
-						sendData = {
-							table: table,
-							name: $('input[name="name"]').val() === '' ? selected[0] : $('input[name="name"]').val(),
-							departmentId: $('input[name="departmentId"]').val() === '' ? selected[1] : $('input[name="departmentId"]').val(),
-							oldName: selected[0],
-							oldDepartmentId: selected[1]
-						};
+						sendData.name = $('input[name="name"]').val() === '' ? selected[0] : $('input[name="name"]').val();
+						sendData.department = $('select[name="department"]').val();
+						sendData.oldName = selected[0];
+						sendData.oldDepartment = selected[1];
 					}
 					if (table === 'lecturer') {
-						sendData = {
-							table: table,
-							firstname: $('input[name="firstname"]').val() === '' ? selected[0] : $('input[name="firstname"]').val(),
-							lastname: $('input[name="lastname"]').val() === '' ? selected[1] : $('input[name="lastname"]').val(),
-							chairId: $('input[name="chairId"]').val() === '' ? selected[2] : $('input[name="chairId"]').val(),
-							oldFirstname: selected[0],
-							oldLastname: selected[1],
-							oldChairId: selected[2]
-						};
+						sendData.firstname = $('input[name="firstname"]').val() === '' ? selected[0] : $('input[name="firstname"]').val();
+						sendData.lastname = $('input[name="lastname"]').val() === '' ? selected[1] : $('input[name="lastname"]').val();
+						sendData.chair = $('select[name="chair"]').val();
+						sendData.oldFirstname = selected[0];
+						sendData.oldLastname = selected[1];
+						sendData.oldChair = selected[2];
 					}
 					if (table === 'class') {
-						sendData = {
-							table: table,
-							name: $('input[name="name"]').val() === '' ? selected[0] : $('input[name="name"]').val(),
-							departmentId: $('input[name="departmentId"]').val() === '' ? selected[1] : $('input[name="departmentId"]').val(),
-							oldName: selected[0],
-							oldDepartmentId: selected[1]
-						};
+						sendData.name = $('input[name="name"]').val() === '' ? selected[0] : $('input[name="name"]').val();
+						sendData.department = $('select[name="department"]').val();
+						sendData.oldName = selected[0];
+						sendData.oldDepartment = selected[1];
 					}
 					if (table === 'student') {
-						sendData = {
-							table: table,
-							firstname: $('input[name="firstname"]').val() === '' ? selected[0] : $('input[name="firstname"]').val(),
-							lastname: $('input[name="lastname"]').val() === '' ? selected[1] : $('input[name="lastname"]').val(),
-							isHead: $('input[name="isHead"]').val() === '' ? selected[2] : $('input[name="isHead"]').val(),
-							classId: $('input[name="classId"]').val() === '' ? selected[3] : $('input[name="classId"]').val(),
-							chairId: $('input[name="chairId"]').val() === '' ? selected[4] : $('input[name="chairId"]').val(),
-							oldFirstname: selected[0],
-							oldLastname: selected[1],
-							oldIsHead: selected[2],
-							oldClassId: selected[3],
-							oldChairId: selected[4]
-						};
+						sendData.firstname = $('input[name="firstname"]').val() === '' ? selected[0] : $('input[name="firstname"]').val();
+						sendData.lastname = $('input[name="lastname"]').val() === '' ? selected[1] : $('input[name="lastname"]').val();
+						sendData.isHead = $('select[name="isHead"]').val();
+						sendData.clas = $('select[name="class"]').val();
+						sendData.chair = $('select[name="chair"]').val();
+						sendData.oldFirstname = selected[0];
+						sendData.oldLastname = selected[1];
+						sendData.oldIsHead = selected[2];
+						sendData.oldClas = selected[3];
+						sendData.oldChair = selected[4];
 					}
 					if (table === 'course') {
-						sendData = {
-							table: table,
-							name: $('input[name="name"]').val() === '' ? selected[0] : $('input[name="name"]').val(),
-							lecturerId: $('input[name="lecturerId"]').val() === '' ? selected[1] : $('input[name="lecturerId"]').val(),
-							oldName: selected[0],
-							oldLecturerId: selected[1]
-						};
+						sendData.name = $('input[name="name"]').val() === '' ? selected[0] : $('input[name="name"]').val();
+						sendData.lastname = $('select[name="lecturer"]').val();
+						sendData.oldName = selected[0];
+						sendData.oldLastname = selected[1];
 					}
-					if (table === 'student_course') {
-						sendData = {
-							table: table,
-							name: $('input[name="name"]').val() === '' ? selected[0] : $('input[name="name"]').val(),
-							lastname: $('input[name="lastname"]').val() === '' ? selected[1] : $('input[name="lastname"]').val(),
-							oldName: selected[0],
-							oldLastname: selected[1]
-						};
+					if (table === 'student_course') {					
+						sendData.name = $('input[name="name"]').val() === '' ? selected[0] : $('input[name="name"]').val();
+						sendData.lastname = $('input[name="lastname"]').val() === '' ? selected[1] : $('input[name="lastname"]').val();
+						sendData.oldName = selected[0];
+						sendData.oldLastname = selected[1];
 					}
 
 					$.ajax({
@@ -335,13 +317,16 @@
 						data: sendData,
 						dataType: 'json',
 						url: '/update',
-						statusCode: {
-							200: function() {
+						success: function(data) {
+							if (data) {
 								location.reload();
-							},
-							400: function() {
+							} else {
 								$('.actionBtn').addClass('error');
 							}
+							
+						},
+						error: function() {
+							$('.actionBtn').addClass('error');
 						}
 					});
 				}
@@ -352,5 +337,11 @@
 		$('.tab').click(function() {
 			$('.actionBtn').text($(this).attr('name'));
 		});
+
+		$('input').keydown(function(event)	{
+	        if (event.keyCode == 32) {
+	        	return false;
+	        }
+	    });
 	});
 })(jQuery);

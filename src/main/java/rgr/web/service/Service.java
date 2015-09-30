@@ -2,6 +2,7 @@ package rgr.web.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import rgr.core.domain.DeleteForm;
 import rgr.core.domain.InsertForm;
 import rgr.core.domain.UpdateForm;
 import rgr.core.domain.UserImpl;
@@ -89,91 +90,135 @@ public class Service {
         return repository.getAllStdCrs();
     }
 
-    public void insert(InsertForm form) {
+    public boolean insert(InsertForm form) {
         if (form.getTable().equals("department")) {
-            if (!form.getName().isEmpty()) repository.insertDepartment(form);
+            if (!form.getName().isEmpty()) {
+                repository.insertDepartment(form);
+                return true;
+            }
         }
         if (form.getTable().equals("chair")){
-            if (!form.getName().isEmpty()) repository.insertChair(form);
+            if (!form.getName().isEmpty()) {
+                repository.insertChair(form);
+                return true;
+            }
         }
         if (form.getTable().equals("lecturer")) {
             if (!form.getFirstname().isEmpty() &&
                     !form.getLastname().isEmpty()) {
                 repository.insertLecturer(form);
+                return true;
             }
         }
         if (form.getTable().equals("class")) {
-            if (!form.getName().isEmpty()) repository.insertClass(form);
+            if (!form.getName().isEmpty()) {
+                repository.insertClass(form);
+                return true;
+            }
         }
         if (form.getTable().equals("student")) {
             if (!form.getFirstname().isEmpty() &&
                     !form.getLastname().isEmpty()) {
                 repository.insertStudent(form);
+                return true;
             }
         }
         if (form.getTable().equals("course")) {
-            if (!form.getName().isEmpty()) repository.insertCourse(form);
+            if (!form.getName().isEmpty()) {
+                repository.insertCourse(form);
+                return true;
+            }
         }
 
         if (form.getTable().equals("student_course")) {
             repository.insertStdCrs(form);
+            return true;
         }
+
+        return false;
     }
 
-    public void deleteDepartment(InsertForm form) {
-        repository.deleteDepartment(form);
+    public boolean update(UpdateForm form) {
+        if (form.getTable().equals("department")) {
+            if (!form.getName().isEmpty()) {
+                repository.updateDepartment(form);
+                return true;
+            }
+        }
+        if (form.getTable().equals("chair")){
+            if (!form.getName().isEmpty()) {
+                repository.updateChair(form);
+                return true;
+            }
+        }
+        if (form.getTable().equals("lecturer")) {
+            if (!form.getFirstname().isEmpty() &&
+                    !form.getLastname().isEmpty()) {
+                repository.updateLecturer(form);
+                return true;
+            }
+        }
+        if (form.getTable().equals("class")) {
+            if (!form.getName().isEmpty()) {
+                repository.updateClass(form);
+                return true;
+            }
+        }
+        if (form.getTable().equals("student")) {
+            if (!form.getFirstname().isEmpty() &&
+                    !form.getLastname().isEmpty()) {
+                repository.updateStudent(form);
+                return true;
+            }
+        }
+        if (form.getTable().equals("course")) {
+            if (!form.getName().isEmpty()) {
+                repository.updateCourse(form);
+                return true;
+            }
+        }
+
+        if (form.getTable().equals("student_course")) {
+            if (!form.getLastname().isEmpty() && !form.getName().isEmpty()) {
+                repository.updateStdCrs(form);
+                return true;
+            }
+        }
+
+        return false;
     }
 
-    public void deleteChair(InsertForm form) {
-        repository.deleteChair(form);
-    }
+    public boolean delete(DeleteForm form) {
+        if (form.getTable().equals("department")) {
+            repository.deleteDepartment(form);
+            return true;
+        }
+        if (form.getTable().equals("chair")){
+            repository.deleteChair(form);
+            return true;
+        }
+        if (form.getTable().equals("lecturer")) {
+            repository.deleteLecturer(form);
+            return true;
+        }
+        if (form.getTable().equals("class")) {
+            repository.deleteClass(form);
+            return true;
+        }
+        if (form.getTable().equals("student")) {
+            repository.deleteStudent(form);
+            return true;
+        }
+        if (form.getTable().equals("course")) {
+            repository.deleteCourse(form);
+            return true;
+        }
 
-    public void deleteLecturer(InsertForm form) {
-        repository.deleteLecturer(form);
-    }
+        if (form.getTable().equals("student_course")) {
+            repository.deleteStdCrs(form);
+            return true;
+        }
 
-    public void deleteClass(InsertForm form) {
-        repository.deleteClass(form);
-    }
-
-    public void deleteStudent(InsertForm form) {
-        repository.deleteStudent(form);
-    }
-
-    public void deleteCourse(InsertForm form) {
-        repository.deleteCourse(form);
-    }
-
-    public void deleteStdCrs(InsertForm form) {
-        repository.deleteStdCrs(form);
-    }
-
-
-    public void updateDepartment(UpdateForm form) {
-        repository.updateDepartment(form);
-    }
-
-    public void updateChair(UpdateForm form) {
-        repository.updateChair(form);
-    }
-
-    public void updateLecturer(UpdateForm form) {
-        repository.updateLecturer(form);
-    }
-
-    public void updateClass(UpdateForm form) {
-        repository.updateClass(form);
-    }
-
-    public void updateStudent(UpdateForm form) {
-        repository.updateStudent(form);
-    }
-
-    public void updateCourse(UpdateForm form) {
-        repository.updateCourse(form);
-    }
-
-    public void updateStdCrs(UpdateForm form) {
-        repository.updateStdCrs(form);
+        return false;
     }
 }

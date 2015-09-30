@@ -2,6 +2,7 @@
 /home/vik/git/DBRGR/src/main/java/rgr/core/repository/IRepository.java
 /home/vik/git/DBRGR/src/main/java/rgr/web/domain/model/Chair.java
 /home/vik/git/DBRGR/src/main/java/rgr/core/domain/UserImpl.java
+/home/vik/git/DBRGR/src/main/java/rgr/core/domain/DeleteForm.java
 /home/vik/git/DBRGR/src/main/java/rgr/web/domain/form/Form.java
 /home/vik/git/DBRGR/src/main/java/rgr/web/domain/model/StudentCourse.java
 /home/vik/git/DBRGR/src/main/java/rgr/core/domain/InsertForm.java

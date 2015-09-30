@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import rgr.core.domain.DeleteForm;
 import rgr.core.domain.InsertForm;
 import rgr.core.domain.UpdateForm;
 import rgr.core.domain.UserImpl;
@@ -151,7 +152,7 @@ public class Controller {
     @RequestMapping(value = "/insert", method = RequestMethod.POST)
     public
     @ResponseBody
-    ResponseEntity insert(HttpServletRequest request) {
+    boolean insert(HttpServletRequest request) {
         InsertForm form = new InsertForm();
         try {
             form.setTable(request.getParameter("table"));
@@ -160,146 +161,70 @@ public class Controller {
             form.setLastname(request.getParameter("lastname"));
             form.setDepartment(request.getParameter("department"));
             form.setChair(request.getParameter("chair"));
-            form.setLecturer(request.getParameter("lecturer"));
             form.setClas(request.getParameter("clas"));
-            form.setIsHead(Boolean.parseBoolean(request.getParameter("isHead")));
-            form.setStudent(request.getParameter("student"));
-            form.setCourse(request.getParameter("course"));
 
-            service.insert(form);
+            if (!service.insert(form)) return false;
         } catch (Exception e) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return false;
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return true;
     }
 
-/*    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public
     @ResponseBody
-    ResponseEntity delete(HttpServletRequest request) {
+    boolean delete(HttpServletRequest request) {
         String table = request.getParameter("table");
-        InsertForm form = new InsertForm();
+        DeleteForm form = new DeleteForm();
         try {
-            if (table.equals("department")) {
-                form.setName(request.getParameter("name").toLowerCase());
-                service.deleteDepartment(form);
-            } else if (table.equals("chair")) {
-                form.setName(request.getParameter("name").toLowerCase());
-                form.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
-                service.deleteChair(form);
-            } else if (table.equals("lecturer")) {
-                form.setFirstname(request.getParameter("firstname").toLowerCase());
-                form.setLastname(request.getParameter("lastname").toLowerCase());
-                service.deleteLecturer(form);
-            } else if (table.equals("class")) {
-                form.setName(request.getParameter("name").toLowerCase());
-                form.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
-                service.deleteClass(form);
-            } else if (table.equals("student")) {
-                form.setFirstname(request.getParameter("firstname").toLowerCase());
-                form.setLastname(request.getParameter("lastname").toLowerCase());
-                try {
-                    form.setClassId(Long.parseLong(request.getParameter("classId")));
-                } catch (NumberFormatException e) {
-                    form.setClassId(null);
-                }
+            form.setTable(request.getParameter("table"));
+            form.setName(request.getParameter("name"));
+            form.setFirstname(request.getParameter("firstname"));
+            form.setLastname(request.getParameter("lastname"));
+            form.setDepartment(request.getParameter("department"));
+            form.setChair(request.getParameter("chair"));
+            form.setClas(request.getParameter("clas"));
 
-                service.deleteStudent(form);
-            } else if (table.equals("course")) {
-                form.setName(request.getParameter("name").toLowerCase());
-                form.setLecturerId(Long.parseLong(request.getParameter("lecturerId")));
-                service.deleteCourse(form);
-            } else if (table.equals("student_course")) {
-                form.setName(request.getParameter("name").toLowerCase());
-                form.setLastname(request.getParameter("lastname").toLowerCase());
-                service.deleteStdCrs(form);
-            }
+            if (!service.delete(form)) return false;
         } catch (Exception e) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return false;
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return true;
     }
-*/
+
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public
     @ResponseBody
-    ResponseEntity update(HttpServletRequest request) {
+    boolean update(HttpServletRequest request) {
         UpdateForm form = new UpdateForm();
         String table = request.getParameter("table");
 
         try {
-            if (table.equals("department")) {
-                form.setName(request.getParameter("name").toLowerCase());
-                form.setOldName(request.getParameter("oldName"));
-                service.updateDepartment(form);
-            } else if (table.equals("chair")) {
-                form.setName(request.getParameter("name").toLowerCase());
-                form.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
-                form.setOldName(request.getParameter("oldName"));
-                form.setOldDepartmentId(Long.parseLong(request.getParameter("oldDepartmentId")));
-                service.updateChair(form);
-            } else if (table.equals("lecturer")) {
-                form.setFirstname(request.getParameter("firstname").toLowerCase());
-                form.setLastname(request.getParameter("lastname").toLowerCase());
-                form.setChairId(Long.parseLong(request.getParameter("chairId")));
-                form.setOldFirstname(request.getParameter("oldFirstname"));
-                form.setOldLastname(request.getParameter("oldLastname"));
-                form.setOldChairId(Long.parseLong(request.getParameter("oldChairId")));
-                service.updateLecturer(form);
-            } else if (table.equals("class")) {
-                form.setName(request.getParameter("name").toLowerCase());
-                form.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
-                form.setOldName(request.getParameter("oldName"));
-                form.setOldDepartmentId(Long.parseLong(request.getParameter("oldDepartmentId")));
-                service.updateClass(form);
-            } else if (table.equals("student")) {
-                form.setFirstname(request.getParameter("firstname").toLowerCase());
-                form.setLastname(request.getParameter("lastname").toLowerCase());
-                form.setIsHead(Boolean.parseBoolean(request.getParameter("isHead")));
-                form.setOldFirstname(request.getParameter("oldFirstname"));
-                form.setOldLastname(request.getParameter("oldLastname"));
-                form.setOldIsHead(Boolean.parseBoolean(request.getParameter("oldIsHead")));
-                try {
-                    form.setClassId(Long.parseLong(request.getParameter("classId")));
-                } catch (NumberFormatException e) {
-                    form.setClassId(null);
-                }
-                try {
-                    form.setChairId(Long.parseLong(request.getParameter("chairId")));
-                } catch (NumberFormatException e) {
-                    form.setChairId(null);
-                }
-                try {
-                    form.setOldClassId(Long.parseLong(request.getParameter("oldClassId")));
-                } catch (NumberFormatException e) {
-                    form.setOldClassId(null);
-                }
-                try {
-                    form.setOldChairId(Long.parseLong(request.getParameter("oldChairId")));
-                } catch (NumberFormatException e) {
-                    form.setOldChairId(null);
-                }
+            form.setTable(request.getParameter("table"));
 
-                service.updateStudent(form);
-            } else if (table.equals("course")) {
-                form.setName(request.getParameter("name").toLowerCase());
-                form.setLecturerId(Long.parseLong(request.getParameter("lecturerId")));
-                form.setOldName(request.getParameter("oldName"));
-                form.setOldLecturerId(Long.parseLong(request.getParameter("oldLecturerId")));
-                service.updateCourse(form);
-            } else if (table.equals("student_course")) {
-                form.setName(request.getParameter("name").toLowerCase());
-                form.setLastname(request.getParameter("lastname").toLowerCase());
-                form.setOldName(request.getParameter("oldName"));
-                form.setOldLastname(request.getParameter("oldLastname"));
-                service.updateStdCrs(form);
-            }
+            form.setName(request.getParameter("name"));
+            form.setFirstname(request.getParameter("firstname"));
+            form.setLastname(request.getParameter("lastname"));
+            form.setDepartment(request.getParameter("department"));
+            form.setChair(request.getParameter("chair"));
+            form.setClas(request.getParameter("clas"));
+            form.setIsHead(Boolean.parseBoolean(request.getParameter("isHead")));
+
+            form.setOldName(request.getParameter("oldName"));
+            form.setOldFirstname(request.getParameter("oldFirstname"));
+            form.setOldLastname(request.getParameter("oldLastname"));
+            form.setOldDepartment(request.getParameter("oldDepartment"));
+            form.setOldChair(request.getParameter("oldChair"));
+            form.setOldClas(request.getParameter("oldClas"));
+            form.setOldIsHead(Boolean.parseBoolean(request.getParameter("oldIsHead")));
+
+            if (!service.update(form)) return false;
         } catch (Exception e) {
-            return new ResponseEntity(HttpStatus.BAD_REQUEST);
+            return false;
         }
 
-        return new ResponseEntity(HttpStatus.OK);
+        return true;
     }
 }

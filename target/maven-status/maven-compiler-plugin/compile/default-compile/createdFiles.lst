@@ -17,3 +17,4 @@ rgr/core/domain/InsertForm.class
 rgr/web/domain/form/Form.class
 rgr/web/domain/model/Department.class
 rgr/web/domain/model/Lecturer.class
+rgr/core/domain/DeleteForm.class

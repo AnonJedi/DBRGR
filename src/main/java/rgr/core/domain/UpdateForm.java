@@ -10,24 +10,17 @@ public class UpdateForm {
     private String firstname;
     private String lastname;
     private boolean isHead;
-    private Long departmentId;
-    private Long chairId;
-    private Long classId;
-    private Long lecturerId;
-    private Long studentId;
-    private Long courseId;
+    private String department;
+    private String chair;
+    private String clas;
 
-    private Long oldId;
     private String oldName;
     private String oldFirstname;
     private String oldLastname;
     private boolean oldIsHead;
-    private Long oldDepartmentId;
-    private Long oldChairId;
-    private Long oldClassId;
-    private Long oldLecturerId;
-    private Long oldStudentId;
-    private Long oldCourseId;
+    private String oldDepartment;
+    private String oldChair;
+    private String oldClas;
 
     public Long getId() {
         return id;
@@ -50,7 +43,7 @@ public class UpdateForm {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
     }
 
     public String getFirstname() {
@@ -58,7 +51,7 @@ public class UpdateForm {
     }
 
     public void setFirstname(String firstname) {
-        this.firstname = firstname;
+        this.firstname = firstname.toLowerCase();
     }
 
     public String getLastname() {
@@ -66,7 +59,7 @@ public class UpdateForm {
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastname = lastname.toLowerCase();
     }
 
     public boolean isHead() {
@@ -77,60 +70,28 @@ public class UpdateForm {
         this.isHead = isHead;
     }
 
-    public Long getDepartmentId() {
-        return departmentId;
+    public String getDepartment() {
+        return department;
     }
 
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartment(String department) {
+        this.department = department.toLowerCase();
     }
 
-    public Long getChairId() {
-        return chairId;
+    public String getChair() {
+        return chair;
     }
 
-    public void setChairId(Long chairId) {
-        this.chairId = chairId;
+    public void setChair(String chair) {
+        this.chair = chair.toLowerCase();
     }
 
-    public Long getClassId() {
-        return classId;
+    public String getClas() {
+        return clas;
     }
 
-    public void setClassId(Long classId) {
-        this.classId = classId;
-    }
-
-    public Long getLecturerId() {
-        return lecturerId;
-    }
-
-    public void setLecturerId(Long lecturerId) {
-        this.lecturerId = lecturerId;
-    }
-
-    public Long getStudentId() {
-        return studentId;
-    }
-
-    public void setStudentId(Long studentId) {
-        this.studentId = studentId;
-    }
-
-    public Long getCourseId() {
-        return courseId;
-    }
-
-    public void setCourseId(Long courseId) {
-        this.courseId = courseId;
-    }
-
-    public Long getOldId() {
-        return oldId;
-    }
-
-    public void setOldId(Long oldId) {
-        this.oldId = oldId;
+    public void setClas(String clas) {
+        this.clas = clas.toLowerCase();
     }
 
     public String getOldName() {
@@ -165,51 +126,27 @@ public class UpdateForm {
         this.oldIsHead = oldIsHead;
     }
 
-    public Long getOldDepartmentId() {
-        return oldDepartmentId;
+    public String getOldDepartment() {
+        return oldDepartment;
     }
 
-    public void setOldDepartmentId(Long oldDepartmentId) {
-        this.oldDepartmentId = oldDepartmentId;
+    public void setOldDepartment(String oldDepartment) {
+        this.oldDepartment = oldDepartment;
     }
 
-    public Long getOldChairId() {
-        return oldChairId;
+    public String getOldChair() {
+        return oldChair;
     }
 
-    public void setOldChairId(Long oldChairId) {
-        this.oldChairId = oldChairId;
+    public void setOldChair(String oldChair) {
+        this.oldChair = oldChair;
     }
 
-    public Long getOldClassId() {
-        return oldClassId;
+    public String getOldClas() {
+        return oldClas;
     }
 
-    public void setOldClassId(Long oldClassId) {
-        this.oldClassId = oldClassId;
-    }
-
-    public Long getOldLecturerId() {
-        return oldLecturerId;
-    }
-
-    public void setOldLecturerId(Long oldLecturerId) {
-        this.oldLecturerId = oldLecturerId;
-    }
-
-    public Long getOldStudentId() {
-        return oldStudentId;
-    }
-
-    public void setOldStudentId(Long oldStudentId) {
-        this.oldStudentId = oldStudentId;
-    }
-
-    public Long getOldCourseId() {
-        return oldCourseId;
-    }
-
-    public void setOldCourseId(Long oldCourseId) {
-        this.oldCourseId = oldCourseId;
+    public void setOldClas(String oldClass) {
+        this.oldClas = oldClass;
     }
 }
