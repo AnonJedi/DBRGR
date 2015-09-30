@@ -12,7 +12,7 @@ public class User {
     }
 
     public void setUsername(String username) {
-        this.username = username;
+        this.username = username.toLowerCase();
     }
 
     public String getPassword() {
@@ -20,6 +20,6 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        this.password = password.toLowerCase();
     }
 }

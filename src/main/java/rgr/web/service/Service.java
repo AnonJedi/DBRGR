@@ -9,7 +9,9 @@ import rgr.core.repository.IRepository;
 import rgr.web.domain.model.*;
 import rgr.web.domain.model.Class;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -46,6 +48,19 @@ public class Service {
         return false;
     }
 
+    public Map<String, List<String>> getStringsForDropdown() {
+        Map<String, List<String>> map = new HashMap<>();
+
+        map.put("department", repository.getDep());
+        map.put("chair", repository.getCh());
+        map.put("lecturer", repository.getLec());
+        map.put("class", repository.getCl());
+        map.put("student", repository.getSt());
+        map.put("course", repository.getCrs());
+
+        return map;
+    }
+
     public List<Department> getAllDepartments() {
         return repository.getAllDepartments();
     }
@@ -79,32 +94,29 @@ public class Service {
             if (!form.getName().isEmpty()) repository.insertDepartment(form);
         }
         if (form.getTable().equals("chair")){
-            if (!form.getName().isEmpty() && !form.getDepartmentId().equals(0)) repository.insertChair(form);
+            if (!form.getName().isEmpty()) repository.insertChair(form);
         }
         if (form.getTable().equals("lecturer")) {
             if (!form.getFirstname().isEmpty() &&
-                    !form.getLastname().isEmpty() &&
-                    !form.getChairId().equals(0)) {
+                    !form.getLastname().isEmpty()) {
                 repository.insertLecturer(form);
             }
         }
         if (form.getTable().equals("class")) {
-            if (!form.getName().isEmpty() && !form.getDepartmentId().equals(0)) repository.insertClass(form);
+            if (!form.getName().isEmpty()) repository.insertClass(form);
         }
         if (form.getTable().equals("student")) {
             if (!form.getFirstname().isEmpty() &&
-                    !form.getLastname().isEmpty() &&
-                    !form.getChairId().equals(0) &&
-                    !form.getClassId().equals(0)) {
+                    !form.getLastname().isEmpty()) {
                 repository.insertStudent(form);
             }
         }
         if (form.getTable().equals("course")) {
-            if (!form.getName().isEmpty() && !form.getLecturerId().equals(0)) repository.insertCourse(form);
+            if (!form.getName().isEmpty()) repository.insertCourse(form);
         }
 
         if (form.getTable().equals("student_course")) {
-            if (!form.getStudentId().equals(0) && !form.getCourseId().equals(0)) repository.insertStdCrs(form);
+            repository.insertStdCrs(form);
         }
     }
 

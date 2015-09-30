@@ -18,6 +18,7 @@ import rgr.web.service.Service;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by vik on 09.09.15.
@@ -43,42 +44,42 @@ public class Controller {
         return "redirect:/";
     }
 
-    @RequestMapping(value = "signin", method = RequestMethod.POST)
+    @RequestMapping(value = "/signin", method = RequestMethod.POST)
     public ModelAndView signin(@ModelAttribute("form") Form form) {
-        UserImpl user = new UserImpl(form.getUsername(), form.getPassword());
+        UserImpl user = new UserImpl(form.getUsername().toLowerCase(), form.getPassword().toLowerCase());
 
         if (user.getUsername().equals("") || user.getPassword().equals("")) {
-            ModelAndView model = new ModelAndView("redirect:welcome", "signinError", new Object());
+            ModelAndView model = new ModelAndView("welcome", "signinError", new Object());
             model.addObject("form", form);
             return model;
         }
 
         if (!service.checkUser(user)) {
-            ModelAndView model = new ModelAndView("redirect:welcome", "signinError", new Object());
+            ModelAndView model = new ModelAndView("welcome", "signinError", new Object());
             model.addObject("form", form);
             return model;
         }
 
-        return new ModelAndView("redirect:main");
+        return new ModelAndView("redirect:/main");
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
     public ModelAndView signup(@ModelAttribute("form") Form form) {
-        UserImpl user = new UserImpl(form.getUsername(), form.getPassword());
+        UserImpl user = new UserImpl(form.getUsername().toLowerCase(), form.getPassword().toLowerCase());
 
         if (user.getUsername().equals("") || user.getPassword().equals("")) {
-            ModelAndView model = new ModelAndView("redirect:welcome", "signupError", new Object());
+            ModelAndView model = new ModelAndView("welcome", "signupError", new Object());
             model.addObject("form", form);
             return model;
         }
 
         if (!service.createUser(user)) {
-            ModelAndView model = new ModelAndView("redirect:welcome", "signupError", new Object());
+            ModelAndView model = new ModelAndView("welcome", "signupError", new Object());
             model.addObject("form", form);
             return model;
         }
 
-        return new ModelAndView("redirect:welcome");
+        return new ModelAndView("welcome");
     }
 
     @RequestMapping(value = "/main", method = RequestMethod.GET)
@@ -86,7 +87,14 @@ public class Controller {
 
         ModelAndView model = new ModelAndView("main");
         List<Department> departments = service.getAllDepartments();
+        Map<String, List<String>> map = service.getStringsForDropdown();
         model.addObject("departments", departments);
+        model.addObject("department", map.get("department"));
+        model.addObject("chair", map.get("chair"));
+        model.addObject("class", map.get("class"));
+        model.addObject("lecturer", map.get("lecturer"));
+        model.addObject("student", map.get("student"));
+        model.addObject("course", map.get("course"));
 
         return model;
     }
@@ -150,13 +158,13 @@ public class Controller {
             form.setName(request.getParameter("name"));
             form.setFirstname(request.getParameter("firstname"));
             form.setLastname(request.getParameter("lastname"));
-            form.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
-            form.setChairId(Long.parseLong(request.getParameter("chairId")));
-            form.setLecturerId(Long.parseLong(request.getParameter("lecturerId")));
-            form.setClassId(Long.parseLong(request.getParameter("classId")));
+            form.setDepartment(request.getParameter("department"));
+            form.setChair(request.getParameter("chair"));
+            form.setLecturer(request.getParameter("lecturer"));
+            form.setClas(request.getParameter("clas"));
             form.setIsHead(Boolean.parseBoolean(request.getParameter("isHead")));
-            form.setStudentId(Long.parseLong(request.getParameter("studentId")));
-            form.setCourseId(Long.parseLong(request.getParameter("courseId")));
+            form.setStudent(request.getParameter("student"));
+            form.setCourse(request.getParameter("course"));
 
             service.insert(form);
         } catch (Exception e) {
@@ -166,7 +174,7 @@ public class Controller {
         return new ResponseEntity(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+/*    @RequestMapping(value = "/delete", method = RequestMethod.POST)
     public
     @ResponseBody
     ResponseEntity delete(HttpServletRequest request) {
@@ -174,23 +182,23 @@ public class Controller {
         InsertForm form = new InsertForm();
         try {
             if (table.equals("department")) {
-                form.setName(request.getParameter("name"));
+                form.setName(request.getParameter("name").toLowerCase());
                 service.deleteDepartment(form);
             } else if (table.equals("chair")) {
-                form.setName(request.getParameter("name"));
+                form.setName(request.getParameter("name").toLowerCase());
                 form.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
                 service.deleteChair(form);
             } else if (table.equals("lecturer")) {
-                form.setFirstname(request.getParameter("firstname"));
-                form.setLastname(request.getParameter("lastname"));
+                form.setFirstname(request.getParameter("firstname").toLowerCase());
+                form.setLastname(request.getParameter("lastname").toLowerCase());
                 service.deleteLecturer(form);
             } else if (table.equals("class")) {
-                form.setName(request.getParameter("name"));
+                form.setName(request.getParameter("name").toLowerCase());
                 form.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
                 service.deleteClass(form);
             } else if (table.equals("student")) {
-                form.setFirstname(request.getParameter("firstname"));
-                form.setLastname(request.getParameter("lastname"));
+                form.setFirstname(request.getParameter("firstname").toLowerCase());
+                form.setLastname(request.getParameter("lastname").toLowerCase());
                 try {
                     form.setClassId(Long.parseLong(request.getParameter("classId")));
                 } catch (NumberFormatException e) {
@@ -199,12 +207,12 @@ public class Controller {
 
                 service.deleteStudent(form);
             } else if (table.equals("course")) {
-                form.setName(request.getParameter("name"));
+                form.setName(request.getParameter("name").toLowerCase());
                 form.setLecturerId(Long.parseLong(request.getParameter("lecturerId")));
                 service.deleteCourse(form);
             } else if (table.equals("student_course")) {
-                form.setName(request.getParameter("name"));
-                form.setLastname(request.getParameter("lastname"));
+                form.setName(request.getParameter("name").toLowerCase());
+                form.setLastname(request.getParameter("lastname").toLowerCase());
                 service.deleteStdCrs(form);
             }
         } catch (Exception e) {
@@ -213,7 +221,7 @@ public class Controller {
 
         return new ResponseEntity(HttpStatus.OK);
     }
-
+*/
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public
     @ResponseBody
@@ -223,32 +231,32 @@ public class Controller {
 
         try {
             if (table.equals("department")) {
-                form.setName(request.getParameter("name"));
+                form.setName(request.getParameter("name").toLowerCase());
                 form.setOldName(request.getParameter("oldName"));
                 service.updateDepartment(form);
             } else if (table.equals("chair")) {
-                form.setName(request.getParameter("name"));
+                form.setName(request.getParameter("name").toLowerCase());
                 form.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
                 form.setOldName(request.getParameter("oldName"));
                 form.setOldDepartmentId(Long.parseLong(request.getParameter("oldDepartmentId")));
                 service.updateChair(form);
             } else if (table.equals("lecturer")) {
-                form.setFirstname(request.getParameter("firstname"));
-                form.setLastname(request.getParameter("lastname"));
+                form.setFirstname(request.getParameter("firstname").toLowerCase());
+                form.setLastname(request.getParameter("lastname").toLowerCase());
                 form.setChairId(Long.parseLong(request.getParameter("chairId")));
                 form.setOldFirstname(request.getParameter("oldFirstname"));
                 form.setOldLastname(request.getParameter("oldLastname"));
                 form.setOldChairId(Long.parseLong(request.getParameter("oldChairId")));
                 service.updateLecturer(form);
             } else if (table.equals("class")) {
-                form.setName(request.getParameter("name"));
+                form.setName(request.getParameter("name").toLowerCase());
                 form.setDepartmentId(Long.parseLong(request.getParameter("departmentId")));
                 form.setOldName(request.getParameter("oldName"));
                 form.setOldDepartmentId(Long.parseLong(request.getParameter("oldDepartmentId")));
                 service.updateClass(form);
             } else if (table.equals("student")) {
-                form.setFirstname(request.getParameter("firstname"));
-                form.setLastname(request.getParameter("lastname"));
+                form.setFirstname(request.getParameter("firstname").toLowerCase());
+                form.setLastname(request.getParameter("lastname").toLowerCase());
                 form.setIsHead(Boolean.parseBoolean(request.getParameter("isHead")));
                 form.setOldFirstname(request.getParameter("oldFirstname"));
                 form.setOldLastname(request.getParameter("oldLastname"));
@@ -276,14 +284,14 @@ public class Controller {
 
                 service.updateStudent(form);
             } else if (table.equals("course")) {
-                form.setName(request.getParameter("name"));
+                form.setName(request.getParameter("name").toLowerCase());
                 form.setLecturerId(Long.parseLong(request.getParameter("lecturerId")));
                 form.setOldName(request.getParameter("oldName"));
                 form.setOldLecturerId(Long.parseLong(request.getParameter("oldLecturerId")));
                 service.updateCourse(form);
             } else if (table.equals("student_course")) {
-                form.setName(request.getParameter("name"));
-                form.setLastname(request.getParameter("lastname"));
+                form.setName(request.getParameter("name").toLowerCase());
+                form.setLastname(request.getParameter("lastname").toLowerCase());
                 form.setOldName(request.getParameter("oldName"));
                 form.setOldLastname(request.getParameter("oldLastname"));
                 service.updateStdCrs(form);

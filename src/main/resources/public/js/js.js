@@ -27,39 +27,40 @@
 			      var option;
 
 			      $('input').each(function() {$(this).attr('type', 'hidden');});
+			      $('.insertDropdown').each(function() {$(this).removeClass('displayInline').addClass('displayNone');});
 
 			      if (url === 'department') {
 			      	option = '<option>name</option>';
 			      	$('input[name=name]').attr('type', 'textbox');
 			      }
 			      if (url === 'chair') {
-			      	option = '<option>name  departmentId</option>';
+			      	option = '<option>name  department</option>';
 			      	$('input[name=name]').attr('type', 'textbox');
-			      	$('input[name=departmentId]').attr('type', 'textbox');	
+			      	$('select[name=department]').removeClass('displayNone').addClass('displayInline');	
 			      }
 			      if (url === 'class') {
-			      	option = '<option>name  departmentId</option>';
+			      	option = '<option>name  department</option>';
 			      	$('input[name=name]').attr('type', 'textbox');
-			      	$('input[name=departmentId]').attr('type', 'textbox');
+			      	$('select[name=department]').removeClass('displayNone').addClass('displayInline');
 			      }
 			      if (url === 'student') {
-			      	option = '<option>firstname  lastname  isHead  classId  chairId</option>';
+			      	option = '<option>firstname  lastname  isHead  class  chair</option>';
 			  	  	$('input[name=firstname]').attr('type', 'textbox');
 			  	  	$('input[name=lastname]').attr('type', 'textbox');
-			  	  	$('input[name=isHead]').attr('type', 'textbox');
-			  	  	$('input[name=classId]').attr('type', 'textbox');
-			  	  	$('input[name=chairId]').attr('type', 'textbox');
+			  	  	$('select[name=isHead]').removeClass('displayNone').addClass('displayInline');
+			  	  	$('select[name=chair]').removeClass('displayNone').addClass('displayInline');
+			  	  	$('select[name=class]').removeClass('displayNone').addClass('displayInline');
 			  	  }
 			      if (url === 'course') {
-			      	option = '<option>name  lecturerId</option>';
+			      	option = '<option>name  lecturer</option>';
 			      	$('input[name=name]').attr('type', 'textbox');
-			      	$('input[name=lecturerId]').attr('type', 'textbox');
+			      	$('select[name=lecturer]').removeClass('displayNone').addClass('displayInline');
 			      }
 			      if (url === 'lecturer') {
-			      	option = '<option>firstname  lastname  chairId</option>';
+			      	option = '<option>firstname  lastname  chair</option>';
 			      	$('input[name=firstname]').attr('type', 'textbox');
 			      	$('input[name=lastname]').attr('type', 'textbox');
-			      	$('input[name=chairId]').attr('type', 'textbox');
+			      	$('select[name=chair]').removeClass('displayNone').addClass('displayInline');
 			      }
 			      if (url === 'student_course') {
 			      	option = '<option>name  lastname</option>';
@@ -76,27 +77,27 @@
 			      	}
 			      	
 			      	if (url === 'chair') {
-			      	  option = '<option>' + this.name + '  ' + this.departmentId + '</option>';
+			      	  option = '<option>' + this.name + '  ' + this.departmentName + '</option>';
 			      	  $select.append(option);	
 			      	}
 
 			      	if (url === 'class') {
-			      		option = '<option>' + this.name + '  ' + this.departmentId + '</option>';
+			      		option = '<option>' + this.name + '  ' + this.departmentName + '</option>';
 			      		$select.append(option);
 			      	}
 
 			      	if (url === 'student') {
-			      		option = '<option>' + this.firstname + '  ' + this.lastname + '  ' + this.head + '  ' + this.classId + '  ' + this.chairId + '</option>';
+			      		option = '<option>' + this.firstname + '  ' + this.lastname + '  ' + this.head + '  ' + this.className + '  ' + this.chairName + '</option>';
 			      		$select.append(option);
 			      	}
 
 			      	if (url === 'course') {
-			      		option = '<option>' + this.name + '  ' + this.lecturerId + '</option>';
+			      		option = '<option>' + this.name + '  ' + this.lecturerName + '</option>';
 			      		$select.append(option);
 			      	}
 
 			      	if (url === 'lecturer') {
-			      		option = '<option>' + this.firstname + '  ' + this.lastname + '  ' + this.chairId + '</option>';
+			      		option = '<option>' + this.firstname + '  ' + this.lastname + '  ' + this.chairName + '</option>';
 			      		$select.append(option);
 			      	}
 
@@ -122,16 +123,16 @@
 			if ($(this).text() === 'Insert') {
 				sendData = {
 					table: $('.dropDown').val(),
-					name: $('input[name="name"]').val(),
-					firstname: $('input[name="firstname"]').val(),
-					lastname: $('input[name="lastname"]').val(),
-					isHead: $('input[name="isHead"]').attr('type') === 'textbox' ? $('input[name="isHead"').val() : 0,
-					departmentId: $('input[name="departmentId"]').attr('type') === 'textbox' ? $('input[name="departmentId"]').val() : 0,
-					chairId: $('input[name="chairId"]').attr('type') === 'textbox' ? $('input[name="chairId"]').val() : 0,
-					lecturerId: $('input[name="lecturerId"]').attr('type') === 'textbox' ? $('input[name="lecturerId"]').val() : 0,
-					classId: $('input[name="classId"]').attr('type') === 'textbox' ? $('input[name="classId"]').val() : 0,
-					studentId: $('input[name="studentId"]').attr('type') === 'textbox' ? $('input[name="studentId"]').val() : 0,
-					courseId: $('input[name="courseId"]').attr('type') === 'textbox' ? $('input[name="courseId"]').val() : 0
+					name: $('input[name=name]').val(),
+					firstname: $('input[name=firstname]').val(),
+					lastname: $('input[name=lastname]').val(),
+					isHead: $('select[name=isHead]').hasClass('displayInline') ? $('select[name=isHead').val() : 0,
+					department: $('select[name=department]').hasClass('displayInline') ? $('select[name=department]').val() : 0,
+					chair: $('select[name=chair]').hasClass('displayInline') ? $('select[name=chair]').val() : 0,
+					lecturer: $('select[name=lecturer]').hasClass('displayInline') ? $('select[name=lecturer]').val() : 0,
+					clas: $('select[name=class]').hasClass('displayInline') ? $('select[name=class]').val() : 0,
+					student: $('select[name=student]').hasClass('displayInline') ? $('select[name=student]').val() : 0,
+					course: $('select[name=course]').hasClass('displayInline') ? $('select[name=course]').val() : 0
 				};
 
 				$.ajax({
@@ -146,6 +147,10 @@
 								option += $(this).val() + '  ';
 								$(this).val('');
 							});
+							$('.insertDropdown').each(function() {
+								option += $(this).hasClass('displayInline') ? $(this).val() + '  ' : '';
+							});
+
 							$('.insertResult').append(option);
 							$('.actionBtn').removeClass('error');
 						},

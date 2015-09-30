@@ -12,7 +12,7 @@ public class StudentCourse {
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastname = lastname.toLowerCase();
     }
 
     public String getName() {
@@ -20,6 +20,6 @@ public class StudentCourse {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
     }
 }

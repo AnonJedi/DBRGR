@@ -6,6 +6,7 @@
 /home/vik/git/DBRGR/src/main/java/rgr/web/domain/model/StudentCourse.java
 /home/vik/git/DBRGR/src/main/java/rgr/core/domain/InsertForm.java
 /home/vik/git/DBRGR/src/main/java/rgr/web/service/Service.java
+/home/vik/git/DBRGR/src/main/java/rgr/core/domain/UpdateForm.java
 /home/vik/git/DBRGR/src/main/java/rgr/core/repository/Repository.java
 /home/vik/git/DBRGR/src/main/java/rgr/web/domain/model/Department.java
 /home/vik/git/DBRGR/src/main/java/rgr/web/domain/model/Student.java

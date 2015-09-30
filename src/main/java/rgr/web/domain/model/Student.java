@@ -8,8 +8,8 @@ public class Student {
     private String firstname;
     private String lastname;
     private boolean isHead;
-    private Long classId;
-    private Long chairId;
+    private String className;
+    private String chairName;
 
     public Long getId() {
         return id;
@@ -43,19 +43,19 @@ public class Student {
         this.isHead = isHead;
     }
 
-    public Long getClassId() {
-        return classId;
+    public String getClassName() {
+        return className;
     }
 
-    public void setClassId(Long classId) {
-        this.classId = classId;
+    public void setClassName(String className) {
+        this.className = className;
     }
 
-    public Long getChairId() {
-        return chairId;
+    public String getChairName() {
+        return chairName;
     }
 
-    public void setChairId(Long chairId) {
-        this.chairId = chairId;
+    public void setChairName(String chairName) {
+        this.chairName = chairName;
     }
 }

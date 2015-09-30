@@ -31,6 +31,37 @@ public class Repository implements IRepository {
         return Optional.ofNullable(mapper.checkUser(user));
     }
 
+
+    @Override
+    public List<String> getDep() {
+        return mapper.getDep();
+    }
+
+    @Override
+    public List<String> getCh() {
+        return mapper.getCh();
+    }
+
+    @Override
+    public List<String> getLec() {
+        return mapper.getLec();
+    }
+
+    @Override
+    public List<String> getCl() {
+        return mapper.getCl();
+    }
+
+    @Override
+    public List<String> getSt() {
+        return mapper.getSt();
+    }
+
+    @Override
+    public List<String> getCrs() {
+        return mapper.getCrs();
+    }
+
     @Override
     public List<Department> getAllDepartments() {
         return mapper.getAllDepartments();

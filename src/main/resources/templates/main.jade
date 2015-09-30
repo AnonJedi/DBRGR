@@ -30,12 +30,26 @@ html
           input(type='textbox', name='name', placeholder='name').inputTextbox
           input(type='hidden', name='firstname', placeholder='firstname').inputTextbox
           input(type='hidden', name='lastname', placeholder='lastname').inputTextbox
-          input(type='hidden', name='isHead', placeholder='isHead').inputTextbox
-          input(type='hidden', name='departmentId', placeholder='departmentId').inputTextbox
-          input(type='hidden', name='chairId', placeholder='chairId').inputTextbox
-          input(type='hidden', name='lecturerId', placeholder='lecturerId').inputTextbox
-          input(type='hidden', name='classId', placeholder='classId').inputTextbox
-          input(type='hidden', name='studentId', placeholder='studentId').inputTextbox
-          input(type='hidden', name='courseId', placeholder='courseId').inputTextbox
+          select(name='isHead').insertDropdown.displayNone
+            option(value='false') false
+            option(value='true') true
+          select(name='department').insertDropdown.displayNone
+            for d in department
+              option= d
+          select(name='chair').insertDropdown.displayNone
+            for ch in chair
+              option= ch
+          select(name='lecturer').insertDropdown.displayNone
+            for l in lecturer
+              option= l
+          select(name='class').insertDropdown.displayNone
+            for c in class
+              option= c
+          select(name='student').insertDropdown.displayNone
+            for s in student
+              option= s
+          select(name='course').insertDropdown.displayNone
+            for c in course 
+              option= c
         .center
           button().actionBtn Insert

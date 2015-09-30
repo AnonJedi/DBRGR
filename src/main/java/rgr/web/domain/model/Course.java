@@ -7,7 +7,7 @@ public class Course {
 
     private Long id;
     private String name;
-    private Long lecturerId;
+    private String lecturerName;
 
     public Long getId() {
         return id;
@@ -22,14 +22,14 @@ public class Course {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
     }
 
-    public Long getLecturerId() {
-        return lecturerId;
+    public String getLecturerName() {
+        return lecturerName;
     }
 
-    public void setLecturerId(Long lecturerId) {
-        this.lecturerId = lecturerId;
+    public void setLecturerName(String lecturerName) {
+        this.lecturerName = lecturerName.toLowerCase();
     }
 }

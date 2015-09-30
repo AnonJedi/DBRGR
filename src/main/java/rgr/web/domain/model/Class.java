@@ -6,7 +6,7 @@ package rgr.web.domain.model;
 public class Class {
     private Long id;
     private String name;
-    private Long departmentId;
+    private String departmentName;
 
     public Long getId() {
         return id;
@@ -21,14 +21,14 @@ public class Class {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.toLowerCase();
     }
 
-    public Long getDepartmentId() {
-        return departmentId;
+    public String getDepartmentName() {
+        return departmentName;
     }
 
-    public void setDepartmentId(Long departmentId) {
-        this.departmentId = departmentId;
+    public void setDepartmentName(String departmentName) {
+        this.departmentName = departmentName.toLowerCase();
     }
 }

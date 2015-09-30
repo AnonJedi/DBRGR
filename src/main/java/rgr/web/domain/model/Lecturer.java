@@ -8,7 +8,7 @@ public class Lecturer {
     private Long id;
     private String firstname;
     private String lastname;
-    private Long chairId;
+    private String chairName;
 
     public Long getId() {
         return id;
@@ -23,7 +23,7 @@ public class Lecturer {
     }
 
     public void setFirstname(String firstname) {
-        this.firstname = firstname;
+        this.firstname = firstname.toLowerCase();
     }
 
     public String getLastname() {
@@ -31,14 +31,14 @@ public class Lecturer {
     }
 
     public void setLastname(String lastname) {
-        this.lastname = lastname;
+        this.lastname = lastname.toLowerCase();
     }
 
-    public Long getChairId() {
-        return chairId;
+    public String getChairName() {
+        return chairName;
     }
 
-    public void setChairId(Long chairId) {
-        this.chairId = chairId;
+    public void setChairName(String chairName) {
+        this.chairName = chairName.toLowerCase();
     }
 }

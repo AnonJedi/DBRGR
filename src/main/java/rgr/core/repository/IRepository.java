@@ -16,8 +16,15 @@ import java.util.Optional;
 public interface IRepository {
 
     public void createUser(UserImpl user);
-
     public Optional<UserImpl> checkUser(UserImpl user);
+
+    public List<String> getDep();
+    public List<String> getCh();
+    public List<String> getLec();
+    public List<String> getCl();
+    public List<String> getSt();
+    public List<String> getCrs();
+
     public List<Department> getAllDepartments();
     public List<Chair> getAllChairs();
     public List<Class> getAllClasses();

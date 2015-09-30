@@ -108,11 +108,11 @@ body {
     margin: auto;
 }
 
-.activeSection {
-	display: block;
+.displayInline {
+	display: inline;
 }
 
-.diactiveSection {
+.displayNone {
 	display: none;
 }
 
@@ -126,7 +126,7 @@ body {
 	padding: 5px 10px 5px 10px;
 }
 
-.inputTextbox {
+.inputTextbox, .insertDropdown {
 	width: 37%;
     height: 30px;
     margin-top: 5px;
