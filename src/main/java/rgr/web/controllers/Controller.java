@@ -18,6 +18,7 @@ import rgr.web.domain.model.Class;
 import rgr.web.service.Service;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -55,11 +56,18 @@ public class Controller {
             return model;
         }
 
-        if (!service.checkUser(user)) {
+        try {
+            if (!service.checkUser(user)) {
+                ModelAndView model = new ModelAndView("welcome", "signinError", new Object());
+                model.addObject("form", form);
+                return model;
+            }
+        } catch (Exception e) {
             ModelAndView model = new ModelAndView("welcome", "signinError", new Object());
             model.addObject("form", form);
             return model;
         }
+
 
         return new ModelAndView("redirect:/main");
     }
@@ -226,5 +234,20 @@ public class Controller {
         }
 
         return true;
+    }
+
+    @RequestMapping(value = "/special", method = RequestMethod.GET)
+    public ModelAndView getSpecial() {
+        return new ModelAndView("special");
+    }
+
+    @RequestMapping(value = "/special", method = RequestMethod.POST)
+    public
+    @ResponseBody
+    List<SpecialSeveralColumn> postSpecial(HttpServletRequest request) {
+        String str = request.getParameter("str").toLowerCase();
+        int query = Integer.parseInt(request.getParameter("query"));
+
+        return service.getSpecial(str, query);
     }
 }

@@ -10,10 +10,7 @@ import rgr.core.repository.IRepository;
 import rgr.web.domain.model.*;
 import rgr.web.domain.model.Class;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * Created by vik on 09.09.15.
@@ -220,5 +217,24 @@ public class Service {
         }
 
         return false;
+    }
+
+    public List<SpecialSeveralColumn> getSpecial(String str, int query) {
+        List<SpecialSeveralColumn> result = new ArrayList<>();
+
+        if (query == 1) {
+            result = repository.getSpecial1(str);
+        } else if (query == 2) {
+            result = repository.getSpecial2(str);
+        } else if (query == 3) {
+            int temp = repository.getSpecial3(str);
+            result.add(new SpecialSeveralColumn());
+            result.get(0).setHome(String.valueOf(temp));
+            return result;
+        } else if (query == 4) {
+            result = repository.getSpecial4(str);
+        }
+
+        return result;
     }
 }

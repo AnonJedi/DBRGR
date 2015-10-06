@@ -203,4 +203,24 @@ public class Repository implements IRepository {
     public void updateStdCrs(UpdateForm form) {
         mapper.updateStdCrs(form);
     }
+
+    @Override
+    public List<SpecialSeveralColumn> getSpecial1(String str) {
+        return mapper.getSpecial1(str);
+    }
+
+    @Override
+    public List<SpecialSeveralColumn> getSpecial2(String str) {
+        return mapper.getSpecial2(str);
+    }
+
+    @Override
+    public int getSpecial3(String str) {
+        return mapper.getSpecial3(str);
+    }
+
+    @Override
+    public List<SpecialSeveralColumn> getSpecial4(String str) {
+        return mapper.getSpecial4(str);
+    }
 }

@@ -142,9 +142,46 @@ body {
 .actionBtn {
 	height: 30px;
     width: 80px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
 
 .center {
 	text-align: center;
 	padding-bottom: 15px;
+}
+
+.query {
+	font-size: 14px;
+    margin-left: 20px;
+    padding-top: 15px;
+    color: white;
+    float: left;
+    width: 446px;
+}
+
+.specialInput {
+	margin-left: 15px;
+    padding: 3px 10px 3px 10px;
+    border-radius: 2px;
+    box-sizing: border-box;
+    font-size: 14px;
+    border: 1px solid black;
+    color: black;
+    float: right;
+}
+
+.specialSelect {
+	width: 225px;
+    margin-top: 15px;
+    margin-left: 4px;
+    padding: 5px;
+}
+
+.errorBorder {
+	border: 1px solid red;
+}
+
+.backBtn {
+	margin-left: 85px;
 }

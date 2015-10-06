@@ -57,4 +57,9 @@ public interface IRepository {
     public void updateStudent(UpdateForm form);
     public void updateCourse(UpdateForm form);
     public void updateStdCrs(UpdateForm form);
+
+    public List<SpecialSeveralColumn> getSpecial1(String str);
+    public List<SpecialSeveralColumn> getSpecial2(String str);
+    public int getSpecial3(String str);
+    public List<SpecialSeveralColumn> getSpecial4(String str);
 }

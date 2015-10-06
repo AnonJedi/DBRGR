@@ -1,0 +1,22 @@
+doctype html
+html
+  head
+    meta(charset='utf-8')
+    meta(name='viewport', content='width=device-width, initial-scale=1')
+    link(rel='stylesheet', type='text/css', href='css/css.css')
+    script(src='/js/jquery-1.11.3.js')
+    script(src='/js/special.js')
+    title DB interface
+  body
+    .content
+      .query Вывести всех преподавателей факультета
+        input.specialInput(name='1', type='textbox', placeholder='name')
+      .query Вывести всех студентов преподавателя
+        input.specialInput(name='2', type='textbox', placeholder='lastname')
+      .query Вывести количество студентов факультета
+        input.specialInput(name='3', type='textbox', placeholder='name')
+      .query Вывести всех студентов факультета
+        input.specialInput(name='4', type='textbox', placeholder='name')
+      select.specialSelect(size=10, multiple='multiple')
+      a(href='/main')
+        button.actionBtn.backBtn Back

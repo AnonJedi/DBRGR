@@ -288,4 +288,51 @@ public interface Mapper {
             "   FROM course\n" +
             "   WHERE name=#{oldName})")
     public void updateStdCrs(UpdateForm form);
+
+    @Select("SELECT firstname as f, lastname as l, chair.name as n\n" +
+            "FROM lecturer INNER JOIN chair\n" +
+            "ON chair.id=lecturer.chair_id\n" +
+            "INNER JOIN department\n" +
+            "ON department.name=#{str} AND department.id=chair.department_id")
+    @Results(value = {
+            @Result(column = "f", property = "firstname"),
+            @Result(column = "l", property = "lastname"),
+            @Result(column = "n", property = "home")
+    })
+    public List<SpecialSeveralColumn> getSpecial1(String str);
+
+    @Select("SELECT student.firstname as f, student.lastname as l, class.name as c\n" +
+            "FROM student INNER JOIN student_course\n" +
+            "ON student.id=student_course.student_id\n" +
+            "INNER JOIN course\n" +
+            "ON course.id=student_course.course_id\n" +
+            "RIGHT JOIN lecturer\n" +
+            "ON lecturer.id=course.lecturer_id AND lecturer.lastname=#{str}\n" +
+            "INNER JOIN class\n" +
+            "ON class.id=student.class_id")
+    @Results(value = {
+            @Result(column = "f", property = "firstname"),
+            @Result(column = "l", property = "lastname"),
+            @Result(column = "c", property = "home")
+    })
+    public List<SpecialSeveralColumn> getSpecial2(String str);
+
+    @Select("SELECT count(student.id) \n" +
+            "FROM student RIGHT JOIN class \n" +
+            "ON student.class_id=class.id\n" +
+            "INNER JOIN department\n" +
+            "ON department.id=class.department_id AND department.name=#{str}")
+    public int getSpecial3(String str);
+
+    @Select("SELECT student.firstname as f, student.lastname as l, class.name as n\n" +
+            "FROM student INNER JOIN class\n" +
+            "ON student.class_id=class.id\n" +
+            "INNER JOIN department\n" +
+            "ON department.id=class.department_id AND department.name=#{str}")
+    @Results(value = {
+            @Result(column = "f", property = "firstname"),
+            @Result(column = "l", property = "lastname"),
+            @Result(column = "n", property = "home")
+    })
+    public List<SpecialSeveralColumn> getSpecial4(String str);
 }
